@@ -15,7 +15,7 @@ def navigate_to(page):
 selected = option_menu(
     menu_title=None,  # Ingen titel på menyn
     options=["Startsida", "Poäng", " Karta", "Om"],
-    icons=["house", "star", "map", "info-circle"],
+    icons=["house", "trophy", "map", "info-circle"],
     menu_icon="cast",
     default_index=0,
     orientation="horizontal",
@@ -67,5 +67,3 @@ elif page == "info":
     🛠️ Utvecklad med: [Streamlit](https://streamlit.io)  
     📱 Designad för: mobilanvändning  
     """)
-
-# OBS! OptionMenu placerar sig automatiskt längst ner om du placerar den sist i din fil
