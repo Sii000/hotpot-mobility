@@ -1,6 +1,37 @@
 import streamlit as st
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
+st.set_page_config(page_title="Göteborgsappen", layout="centered")
+
+# ⬅️ Menyval (vänstersida)
+menu = st.sidebar.radio(
+    "Navigera",
+    ("🏠 Startsida", "📅 Kalendarium", "ℹ️ Om")
 )
+
+# 💡 Startsida
+if menu == "🏠 Startsida":
+    st.title("Välkommen till Göteborgsappen 👋")
+    st.markdown("""
+    Här kommer du kunna:
+    - Hitta aktiviteter i Göteborg
+    - Filtrera efter datum, plats och kategori
+    - Spara dina favoriter (kommer snart)
+
+    Appen är anpassad för mobil – lägg till den på din hemskärm för snabb åtkomst!
+    """)
+
+# 📅 Kalendarium – placeholder
+elif menu == "📅 Kalendarium":
+    st.title("Kalendarium")
+    st.info("Denna funktion är inte aktiv ännu. Kommer snart!")
+
+# ℹ️ Om
+elif menu == "ℹ️ Om":
+    st.title("Om appen")
+    st.markdown("""
+    Denna app är utvecklad för att göra det enkelt att upptäcka och planera evenemang i Göteborg.
+
+    🛠️ Utvecklad med: [Streamlit](https://streamlit.io)  
+    📱 Designad för: mobilanvändning  
+    """)
+
