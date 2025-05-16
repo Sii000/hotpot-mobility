@@ -9,6 +9,12 @@ if "page" not in st.session_state:
 def set_page(page):
     st.session_state.page = page
     
+# Hantera knapptryck (från formuläret i HTML-menyn)
+if st.session_state.get("nav_submit"):
+    st.session_state.page = st.session_state.nav_submit
+elif st.requested_url_params.get("nav"):
+    st.session_state.page = st.requested_url_params["nav"]
+
 
 st.markdown("""
 <style>
@@ -17,38 +23,33 @@ st.markdown("""
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f0f0f0;
-    border-top: 1px solid #ccc;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 0.5rem 0;
-    z-index: 9999;
-    box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    font-size: 14px
+    z-index: 10000;
 }
-.bottom-nav button {
-    background: none;
-    border: none;
-    font-size: 14px;
-    color: #444;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 12px;
-    min-width: 60px;
-    transition: color 0.3s;
-}
-.bottom-nav button.selected {
-    color: #0066cc;
-    font-weight: bold;
-}
-.block-container {
-    padding-bottom: 80px;
-}
-</style>
-""", unsafe_allow_html=True)
+    .nav-item.selected {
+        color: #0066cc;
+        font-weight: bold;
+    }
+    </style>
+
+    <div class="bottom-nav">
+        <form method="post">
+            <button name="nav" value="home" class="nav-item {home_selected}">🏠<br>Startsida</button>
+            <button name="nav" value="map" class="nav-item {map_selected}">🗺️<br>Karta</button>
+            <button name="nav" value="info" class="nav-item {info_selected}">ℹ️<br>Om</button>
+        </form>
+    </div>
+""".format(
+    home_selected="selected" if st.session_state.page == "home" else "",
+    map_selected="selected" if st.session_state.page == "map" else "",
+    info_selected="selected" if st.session_state.page == "info" else "",
+), unsafe_allow_html=True)
 
 
 # Bottenmeny med knappar och ikoner + text
