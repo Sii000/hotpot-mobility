@@ -16,8 +16,9 @@ st.markdown("<div style='height: 70px;'></div>", unsafe_allow_html=True)
 # Använd option_menu för bottenmeny (horisontell)
 selected = option_menu(
     menu_title= None,  # Ingen titel på menyn
-    options= ["Startsida", "Poäng", " Karta", "Om"],
+    options= ["Startsida", "Poäng", "Karta", "Om"],
     icons= ["house", "trophy", "map", "info-circle"],
+    menu_icon= "cast",
     default_index= ["home", "points", "map", "info"],
     orientation= "horizontal",
     styles= {
@@ -51,6 +52,13 @@ selected = option_menu(
             "color": "white",
             "font-weight": "bold"
         }
+        
+    page_to_option = {
+        "home": "Startsida",
+        "points": "Poäng",
+        "map": "Karta",
+        "info": "Om"
+        }
     }
 )
 
@@ -64,8 +72,7 @@ elif selected == "Karta":
 elif selected == "Om":
     st.session_state.page = "info"
     
-st.rerun()
-
+    
 # Visa vald sida
 page = st.session_state.page
 
