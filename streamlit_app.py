@@ -76,19 +76,19 @@ st.markdown("""
 
 # ⬇️ Bottenmeny med knappar
 st.markdown('<div class="bottom-nav">', unsafe_allow_html=True)
-col1, col2, col3 = st.columns(3)
+cols = st.columns(3)
 
-with col1:
+with cols[0]:
     if st.button("🏠\nStartsida"):
         navigate_to("home")
         st.rerun()
 
-with col2:
+with cols[1]:
     if st.button("🗺️\nKarta"):
         navigate_to("map")
         st.rerun()
 
-with col3:
+with cols[2]:
     if st.button("ℹ️\nOm"):
         navigate_to("info")
         st.rerun()
