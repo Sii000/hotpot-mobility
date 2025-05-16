@@ -5,7 +5,7 @@ st.set_page_config(page_title="Göteborgsappen", layout="centered")
 # ⬅️ Menyval (vänstersida)
 menu = st.sidebar.radio(
     "Navigera",
-    ("🏠 Startsida", "📅 Karta", "ℹ️ Om")
+    ("🏠 Startsida", "🗺️ Karta", "ℹ️ Om")
 )
 
 # 💡 Startsida
@@ -20,7 +20,7 @@ if menu == "🏠 Startsida":
     Appen är anpassad för mobil – lägg till den på din hemskärm för snabb åtkomst!
     """)
 
-# 📅 Kalendarium – placeholder
+# 🗺️ Karta – placeholder
 elif menu == "🗺️ Karta":
     st.title("Karta")
     st.info("Denna funktion är inte aktiv ännu. Kommer snart!")
