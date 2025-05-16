@@ -72,15 +72,10 @@ selected = option_menu(
     }
 )
 
-# Spara valet i session_state
-if selected == "Startsida":
-    st.session_state.page = "home"
-elif selected == "Poäng":
-    st.session_state.page = "points"
-elif selected == "Karta":
-    st.session_state.page = "map"
-elif selected == "Om":
-    st.session_state.page = "info"
+# Uppdatera session_state beroende på användarens val
+if selected and option_to_page[selected] != st.session_state.page:
+    st.session_state.page = option_to_page[selected]
+    st.rerun()
     
     
 # Visa vald sida
