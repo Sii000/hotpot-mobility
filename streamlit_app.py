@@ -11,15 +11,16 @@ def navigate_to(page):
     st.session_state.page = page
     st.rerun()
 
+st.markdown("<div style='height: 70px;'></div>", unsafe_allow_html=True)    
+
 # Använd option_menu för bottenmeny (horisontell)
 selected = option_menu(
-    menu_title=None,  # Ingen titel på menyn
-    options=["Startsida", "Poäng", " Karta", "Om"],
-    icons=["house", "star", "map", "info-circle"],
-    menu_icon="cast",
-    default_index=0,
-    orientation="horizontal",
-    styles={
+    menu_title= None,  # Ingen titel på menyn
+    options= ["Startsida", "Poäng", " Karta", "Om"],
+    icons= ["house", "trophy", "map", "info-circle"],
+    default_index= ["home", "points", "map", "info"],
+    orientation= "horizontal",
+    styles= {
         "container": {
             "padding": "0!important", 
             "background-color": "#f0f0f0",
@@ -33,16 +34,22 @@ selected = option_menu(
             "display": "block",
             "margin": "0 auto",
             "font-size": "20px"
+            
         },
         "nav-link": {
-            "font-size": "16px", 
-            "text-align": "center", 
+            "display": "flex",
+            "flex-direction": "column",
+            "align-items": "center",
+            "font-size": "14px", 
             "margin": "0px", 
+            "padding": "6px 0",
             "--hover-color": "#eee"
+            
         },
         "nav-link-selected": {
             "background-color": "#0d6efd", 
-            "color": "white"
+            "color": "white",
+            "font-weight": "bold"
         }
     }
 )
@@ -56,6 +63,8 @@ elif selected == "Karta":
     st.session_state.page = "map"
 elif selected == "Om":
     st.session_state.page = "info"
+    
+st.rerun()
 
 # Visa vald sida
 page = st.session_state.page
