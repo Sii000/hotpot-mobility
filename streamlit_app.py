@@ -1,10 +1,4 @@
-import streamlit as st
-from streamlit_option_menu import option_menu
-
-st.set_page_config(page_title="ActivityFinder", layout="wide")
-
-st.markdown("<div style='padding-bottom: 70px;'></div>", unsafe_allow_html=True)
-
+st.set_page_config(page_title="ActivityFinder", layout="centered")
 
 # Initiera session state
 if "page" not in st.session_state:
@@ -14,36 +8,19 @@ def navigate_to(page):
     st.session_state.page = page
     st.rerun()
 
-
 # Använd option_menu för bottenmeny (horisontell)
 selected = option_menu(
-    menu_title = None,  # Ingen titel på menyn
-    options = ["Startsida", "Poäng", " Karta", "Om"],
-    icons = ["house", "trophy", "map", "info-circle"],
-    menu_icon = "cast",
-    default_index = 0,
-    orientation = "horizontal",
-    styles = {
-        "container": {
-            "padding": "0!important",
-            "background-color": "#f0f0f0",
-            "position": "fixed",       # fixerar menyn
-            "bottom": "0",             # placerar den längst ner
-            "width": "100%",           # full bredd
-            "z-index": "9999",         # ligger över annat innehåll
-            "border-top": "1px solid #ccc",
-        },
-        "nav-link": {
-            "font-size": "16px",
-            "text-align": "center",
-            "margin": "0px",
-            "--hover-color": "#eee",
-        },
-        "nav-link-selected": {
-            "background-color": "#0d6efd",
-            "color": "white",
-        },
-    }
+    menu_title=None,  # Ingen titel på menyn
+    options=["Startsida", "Poäng", " Karta", "Om"],
+    icons=["house", "trophy", "map", "info-circle"],
+    menu_icon="cast",
+    default_index=0,
+    orientation="horizontal",
+    styles={
+        "container": {"padding": "0!important", "background-color": "#f0f0f0"},
+        "nav-link": {"font-size": "16px", "text-align": "center", "margin": "0px", "--hover-color": "#eee"},
+        "nav-link-selected": {"background-color": "#0d6efd", "color": "white"},
+    },
 )
 
 # Spara valet i session_state
