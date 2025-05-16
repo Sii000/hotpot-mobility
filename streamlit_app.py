@@ -1,11 +1,37 @@
 import streamlit as st
 
-st.set_page_config(page_title="Göteborgsappen", layout="centered")
+st.set_page_config(page_title="ActivityFinder", layout="centered")
 
-# ⬅️ Menyval (vänstersida)
-menu = st.sidebar.radio(
-    "Navigera",
-    ("🏠 Startsida", "🗺️ Karta", "ℹ️ Om")
+# CSS för att fixera navigationsfält i botten
+st.markdown("""
+    <style>
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f0f0f0;
+        border-top: 1px solid #ccc;
+        display: flex;
+        justify-content: space-around;
+        padding: 0.5rem 0;
+        z-index: 9999;
+    }
+    .bottom-nav a {
+        text-decoration: none;
+        color: #444;
+        font-size: 18px;
+    }
+    .bottom-nav a.selected {
+        color: #0066cc;
+        font-weight: bold;
+    }
+    .block-container {
+        padding-bottom: 80px;  /* space for nav */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 )
 
 # 💡 Startsida
@@ -35,3 +61,11 @@ elif menu == "ℹ️ Om":
     📱 Designad för: mobilanvändning  
     """)
 
+# Navigeringsfält längst ner
+st.markdown(f"""
+    <div class="bottom-nav">
+        <a href="/?page=home" class="{ 'selected' if selected == 'home' else '' }">🏠</a>
+        <a href="/?page=map" class="{ 'selected' if selected == 'map' else '' }">🗺️</a>
+        <a href="/?page=info" class="{ 'selected' if selected == 'info' else '' }">ℹ️</a>
+    </div>
+""", unsafe_allow_html=True)
