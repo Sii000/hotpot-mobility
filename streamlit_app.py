@@ -1,20 +1,44 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="ActivityFinder", layout="centered")
 
-# Initiera första sidan
+# Initiera session state
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
-# Funktion för att byta sida
 def navigate_to(page):
     st.session_state.page = page
     st.rerun()
 
-# Sidhållare
+# Använd option_menu för bottenmeny (horisontell)
+selected = option_menu(
+    menu_title=None,  # Ingen titel på menyn
+    options=["Startsida", "Poäng", " Karta", "Om"],
+    icons=["house", "medal", "map", "info-circle"],
+    menu_icon="cast",
+    default_index=0,
+    orientation="horizontal",
+    styles={
+        "container": {"padding": "0!important", "background-color": "#f0f0f0"},
+        "nav-link": {"font-size": "16px", "text-align": "center", "margin": "0px", "--hover-color": "#eee"},
+        "nav-link-selected": {"background-color": "#0d6efd", "color": "white"},
+    },
+)
+
+# Spara valet i session_state
+if selected == "Startsida":
+    st.session_state.page = "home"
+elif selected == "Poäng":
+    st.session_state.page = "points"
+elif selected == "Karta":
+    st.session_state.page = "map"
+elif selected == "Om":
+    st.session_state.page = "info"
+
+# Visa vald sida
 page = st.session_state.page
 
-# 💡 SIDINNEHÅLL
 if page == "home":
     st.title("Välkommen till ActivityFinder 👋")
     st.markdown("""
@@ -26,6 +50,11 @@ if page == "home":
     Appen är anpassad för mobil – lägg till den på din hemskärm för snabb åtkomst!
     """)
 
+elif page == "points"
+    st.title("Poäng")
+    st.info("Denna funktion är inte aktiv ännu. Kommer snart!")
+    
+    
 elif page == "map":
     st.title("Karta")
     st.info("Denna funktion är inte aktiv ännu. Kommer snart!")
@@ -39,54 +68,4 @@ elif page == "info":
     📱 Designad för: mobilanvändning  
     """)
 
-# CSS + MENY
-st.markdown("""
-<style>
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background-color: white;
-    border-top: 1px solid #ddd;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
-}
-.bottom-nav button {
-    background: none;
-    border: none;
-    font-size: 18px;
-    color: #444;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 0;
-}
-.bottom-nav button.selected {
-    color: #007bff;
-    font-weight: bold;
-}
-.block-container {
-    padding-bottom: 80px;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Bottenmeny i ren HTML via Streamlit knappar i flexbox
-col1, col2, col3 = st.columns([1,1,1])
-with col1:
-    if st.button("🏠\nStartsida", key="home_btn"):
-        navigate_to("home")
-with col2:
-    if st.button("🗺️\nKarta", key="map_btn"):
-        navigate_to("map")
-with col3:
-    if st.button("ℹ️\nOm", key="info_btn"):
-        navigate_to("info")
-
-st.markdown('</div>', unsafe_allow_html=True)
+# OBS! OptionMenu placerar sig automatiskt längst ner om du placerar den sist i din fil
