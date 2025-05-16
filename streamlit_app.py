@@ -34,7 +34,7 @@ st.markdown("""
 
 
 # 💡 Startsida
-selected = st.experimental_get_query_params().get("page", ["home"])[0]
+selected = st.query_params.get("page", ["home"])[0]
 
 if selected == "🏠 Startsida":
     st.title("Välkommen till ActivityFinder 👋")
