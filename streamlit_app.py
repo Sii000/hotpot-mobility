@@ -1,27 +1,43 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-st.set_page_config(page_title="ActivityFinder", layout="centered")
+st.set_page_config (page_title = "ActivityFinder", layout = "centered")
 
 # Initiera session state
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
-def navigate_to(page):
+def navigate_to (page):
     st.session_state.page = page
     st.rerun()
+    
+# Mappa interna sidnamn till menyetiketter
+page_to_option = {
+    "home": "Startsida",
+    "points": "Poäng",
+    "map": "Karta",
+    "info": "Om"
+}
 
+option_to_page = {v: k for k, v in page_to_option.items()}
+
+# Räkna ut vilket index som ska vara aktivt i menyn
+default_index = list (
+    page_to_option.values()).index (page_to_option.get(st.session_state.page, "Startsida"))
+
+
+# Visa lite extra utrymme för bottenmenyn
 st.markdown("<div style='height: 70px;'></div>", unsafe_allow_html=True)    
 
 # Använd option_menu för bottenmeny (horisontell)
 selected = option_menu(
-    menu_title= None,  # Ingen titel på menyn
-    options= ["Startsida", "Poäng", "Karta", "Om"],
-    icons= ["house", "trophy", "map", "info-circle"],
-    menu_icon= "cast",
-    default_index= ["home", "points", "map", "info"],
-    orientation= "horizontal",
-    styles= {
+    menu_title = None,  # Ingen titel på menyn
+    options = ["Startsida", "Poäng", "Karta", "Om"],
+    icons = ["house", "trophy", "map", "info-circle"],
+    menu_icon = "cast",
+    default_index = ["home", "points", "map", "info"],
+    orientation = "horizontal",
+    styles = {
         "container": {
             "padding": "0!important", 
             "background-color": "#f0f0f0",
@@ -51,14 +67,8 @@ selected = option_menu(
             "background-color": "#0d6efd", 
             "color": "white",
             "font-weight": "bold"
-        }
+        },
         
-    page_to_option = {
-        "home": "Startsida",
-        "points": "Poäng",
-        "map": "Karta",
-        "info": "Om"
-        }
     }
 )
 
