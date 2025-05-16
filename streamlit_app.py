@@ -5,12 +5,12 @@ st.set_page_config(page_title="Göteborgsappen", layout="centered")
 # ⬅️ Menyval (vänstersida)
 menu = st.sidebar.radio(
     "Navigera",
-    ("🏠 Startsida", "📅 Kalendarium", "ℹ️ Om")
+    ("🏠 Startsida", "📅 Karta", "ℹ️ Om")
 )
 
 # 💡 Startsida
 if menu == "🏠 Startsida":
-    st.title("Välkommen till Göteborgsappen 👋")
+    st.title("Välkommen till ActivityFinder 👋")
     st.markdown("""
     Här kommer du kunna:
     - Hitta aktiviteter i Göteborg
@@ -21,8 +21,8 @@ if menu == "🏠 Startsida":
     """)
 
 # 📅 Kalendarium – placeholder
-elif menu == "📅 Kalendarium":
-    st.title("Kalendarium")
+elif menu == "🗺️ Karta":
+    st.title("Karta")
     st.info("Denna funktion är inte aktiv ännu. Kommer snart!")
 
 # ℹ️ Om
