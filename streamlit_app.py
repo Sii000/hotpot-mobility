@@ -20,10 +20,31 @@ selected = option_menu(
     default_index=0,
     orientation="horizontal",
     styles={
-        "container": {"padding": "0!important", "background-color": "#f0f0f0"},
-        "nav-link": {"font-size": "16px", "text-align": "center", "margin": "0px", "--hover-color": "#eee"},
-        "nav-link-selected": {"background-color": "#0d6efd", "color": "white"},
-    },
+        "container": {
+            "padding": "0!important", 
+            "background-color": "#f0f0f0",
+            "position": "fixed",
+            "bottom": "0",
+            "width": "100%",
+            "z-index": "9999",
+            "border-top": "1px solid #ccc"
+        },
+        "icon": {
+            "display": "block",
+            "margin": "0 auto",
+            "font-size": "20px"
+        },
+        "nav-link": {
+            "font-size": "16px", 
+            "text-align": "center", 
+            "margin": "0px", 
+            "--hover-color": "#eee"
+        },
+        "nav-link-selected": {
+            "background-color": "#0d6efd", 
+            "color": "white"
+        }
+    }
 )
 
 # Spara valet i session_state
