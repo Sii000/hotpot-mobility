@@ -1,5 +1,5 @@
-import streamlit as st
 from streamlit import experimental_rerun
+import streamlit as st
 
 
 st.set_page_config(page_title="ActivityFinder", layout="centered")
