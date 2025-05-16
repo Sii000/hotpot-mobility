@@ -1,6 +1,4 @@
-from streamlit import experimental_rerun
 import streamlit as st
-
 
 st.set_page_config(page_title="ActivityFinder", layout="centered")
 
@@ -83,16 +81,16 @@ col1, col2, col3 = st.columns(3)
 with col1:
     if st.button("🏠\nStartsida"):
         navigate_to("home")
-        experimental_rerun()
+        st.rerun()
 
 with col2:
     if st.button("🗺️\nKarta"):
         navigate_to("map")
-        experimental_rerun()
+        st.rerun()
 
 with col3:
     if st.button("ℹ️\nOm"):
         navigate_to("info")
-        experimental_rerun()
+        st.rerun()
 
 st.markdown('</div>', unsafe_allow_html=True)
