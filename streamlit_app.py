@@ -15,7 +15,7 @@ def navigate_to(page):
 selected = option_menu(
     menu_title=None,  # Ingen titel på menyn
     options=["Startsida", "Poäng", " Karta", "Om"],
-    icons=["house", "medal", "map", "info-circle"],
+    icons=["house", "star", "map", "info-circle"],
     menu_icon="cast",
     default_index=0,
     orientation="horizontal",
@@ -50,7 +50,7 @@ if page == "home":
     Appen är anpassad för mobil – lägg till den på din hemskärm för snabb åtkomst!
     """)
 
-elif page == "points"
+elif page == "points":
     st.title("Poäng")
     st.info("Denna funktion är inte aktiv ännu. Kommer snart!")
     
