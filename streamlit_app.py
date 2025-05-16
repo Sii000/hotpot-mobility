@@ -9,6 +9,7 @@ if "page" not in st.session_state:
 # Funktion för att byta sida
 def navigate_to(page):
     st.session_state.page = page
+    st.rerun()
 
 # Sidhållare
 page = st.session_state.page
@@ -40,57 +41,52 @@ elif page == "info":
 
 # CSS + MENY
 st.markdown("""
-    <style>
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: #ffffff;
-        border-top: 1px solid #ddd;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding: 10px 0;
-        font-size: 14px;
-        z-index: 10000;
-    }
-    .nav-button {
-        background: none;
-        border: none;
-        font-size: 16px;
-        color: #444;
-        text-align: center;
-        cursor: pointer;
-        flex-grow: 1;
-    }
-    .nav-button.selected {
-        color: #0066cc;
-        font-weight: bold;
-    }
-    .block-container {
-        padding-bottom: 80px;
-    }
-    </style>
+<style>
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+}
+.bottom-nav button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #444;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+}
+.bottom-nav button.selected {
+    color: #007bff;
+    font-weight: bold;
+}
+.block-container {
+    padding-bottom: 80px;
+}
+</style>
 """, unsafe_allow_html=True)
 
-# ⬇️ Bottenmeny med knappar
-st.markdown('<div class="bottom-nav">', unsafe_allow_html=True)
-cols = st.columns(3)
-
-with cols[0]:
-    if st.button("🏠\nStartsida"):
+# Bottenmeny i ren HTML via Streamlit knappar i flexbox
+col1, col2, col3 = st.columns([1,1,1])
+with col1:
+    if st.button("🏠\nStartsida", key="home_btn"):
         navigate_to("home")
-        st.rerun()
-
-with cols[1]:
-    if st.button("🗺️\nKarta"):
+with col2:
+    if st.button("🗺️\nKarta", key="map_btn"):
         navigate_to("map")
-        st.rerun()
-
-with cols[2]:
-    if st.button("ℹ️\nOm"):
+with col3:
+    if st.button("ℹ️\nOm", key="info_btn"):
         navigate_to("info")
-        st.rerun()
 
 st.markdown('</div>', unsafe_allow_html=True)
