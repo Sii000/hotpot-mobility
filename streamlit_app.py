@@ -2,7 +2,14 @@ import streamlit as st
 
 st.set_page_config(page_title="ActivityFinder", layout="centered")
 
-# CSS för att fixa bottenmeny
+# Hämta valt menyval från session state eller default
+if "page" not in st.session_state:
+    st.session_state.page = "home"
+
+def set_page(page):
+    st.session_state.page = page
+    
+
 st.markdown("""
 <style>
 .bottom-nav {
@@ -14,54 +21,49 @@ st.markdown("""
     border-top: 1px solid #ccc;
     display: flex;
     justify-content: space-around;
+    align-items: center;
     padding: 0.5rem 0;
     z-index: 9999;
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
 }
 .bottom-nav button {
     background: none;
     border: none;
-    font-size: 16px;
+    font-size: 14px;
     color: #444;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
-    padding: 0 10px;
+    gap: 4px;
+    padding: 6px 12px;
+    min-width: 60px;
+    transition: color 0.3s;
 }
 .bottom-nav button.selected {
     color: #0066cc;
     font-weight: bold;
 }
 .block-container {
-    padding-bottom: 80px; /* plats för bottenmeny */
+    padding-bottom: 80px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# Hämta valt menyval från session state eller default
-if "page" not in st.session_state:
-    st.session_state.page = "home"
-
-def set_page(page):
-    st.session_state.page = page
 
 # Bottenmeny med knappar och ikoner + text
 with st.container():
     st.markdown('<div class="bottom-nav">', unsafe_allow_html=True)
     cols = st.columns(3)
     with cols[0]:
-        selected = st.session_state.page == "home"
         if st.button("🏠\nStartsida", key="btn_home", help="Startsida", 
                      on_click=set_page, args=("home",)):
             pass
     with cols[1]:
-        selected = st.session_state.page == "map"
         if st.button("🗺️\nKarta", key="btn_map", help="Karta", 
                      on_click=set_page, args=("map",)):
             pass
     with cols[2]:
-        selected = st.session_state.page == "info"
         if st.button("ℹ️\nOm", key="btn_info", help="Om", 
                      on_click=set_page, args=("info",)):
             pass
