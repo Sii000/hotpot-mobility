@@ -32,10 +32,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-)
 
 # 💡 Startsida
-if menu == "🏠 Startsida":
+if selected == "🏠 Startsida":
     st.title("Välkommen till ActivityFinder 👋")
     st.markdown("""
     Här kommer du kunna:
@@ -47,12 +46,12 @@ if menu == "🏠 Startsida":
     """)
 
 # 🗺️ Karta – placeholder
-elif menu == "🗺️ Karta":
+elif selected == "🗺️ Karta":
     st.title("Karta")
     st.info("Denna funktion är inte aktiv ännu. Kommer snart!")
 
 # ℹ️ Om
-elif menu == "ℹ️ Om":
+elif selected == "ℹ️ Om":
     st.title("Om appen")
     st.markdown("""
     Denna app är utvecklad för att göra det enkelt att upptäcka och planera evenemang i Göteborg.
