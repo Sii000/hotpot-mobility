@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from kalendarium_api.py import fetch_kalendarium   # pyright: ignore[reportMissingImports]
+from kalendarium_api import fetch_kalendarium   # pyright: ignore[reportMissingImports]
 
 
 st.set_page_config (page_title = "ActivityFinder", layout = "centered")
@@ -36,8 +36,8 @@ selected = option_menu(
     menu_title = None,  # Ingen titel på menyn
     options = ["Startsida", "Poäng", "Karta", "Om"],
     icons = ["house", "trophy", "map", "info-circle"],
-    menu_icon = "cast",
-    default_index = ["home", "points", "map", "info"],
+    menu_icon = "cast",   
+    default_index = list(page_to_option.values()).index(page_to_option[st.session_state.page]),
     orientation = "horizontal",
     styles = {
         "container": {
@@ -79,6 +79,13 @@ if selected and option_to_page[selected] != st.session_state.page:
     st.session_state.page = option_to_page[selected]
     st.rerun()
     
+
+page_to_option = {
+    "home": "Startsida",
+    "points": "Poäng",
+    "map": "Karta",
+    "info": "Om"
+}
     
 # Visa vald sida
 page = st.session_state.page
@@ -95,18 +102,25 @@ if page == "home":
     """)
     
      # Välj datumintervall
+    st.title ("Hitta pågående evenemang:")
     start_date = st.date_input("Startdatum", value=None, key="start")
     end_date = st.date_input("Slutdatum", value=None, key="end")
 
     if start_date and end_date:
         data = fetch_kalendarium(start_date, end_date)
+        
+        st.write("🔍 API-svar:")
+        st.write(data)  # eller print(data) om du kör i terminalen
 
-        if data:
-            st.success("Aktiviteter hämtade:")
-            for aktivitet in data:
-                st.write(f"🗓️ {aktivitet.get('title', 'Ingen titel')}")
+         if isinstance(data, list):
+             for aktivitet in data:
+                 if isinstance(aktivitet, dict):
+                     st.write(f"🗓️ {aktivitet.get('title', 'Ingen titel')}")
+                else:
+                    st.warning(f"❗ Aktivitet är inte ett dict: {aktivitet}")
         else:
-            st.error("Kunde inte hämta data från Kalendarium.")
+            st.error("❌ API-svaret är inte en lista av aktiviteter.")
+
 
 
 elif page == "points":
