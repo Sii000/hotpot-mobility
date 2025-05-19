@@ -1,5 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
+from kalendarium_api.py import fetch_kalendarium   # pyright: ignore[reportMissingImports]
+
 
 st.set_page_config (page_title = "ActivityFinder", layout = "centered")
 
@@ -91,6 +93,21 @@ if page == "home":
 
     Appen är anpassad för mobil – lägg till den på din hemskärm för snabb åtkomst!
     """)
+    
+     # Välj datumintervall
+    start_date = st.date_input("Startdatum", value=None, key="start")
+    end_date = st.date_input("Slutdatum", value=None, key="end")
+
+    if start_date and end_date:
+        data = fetch_kalendarium(start_date, end_date)
+
+        if data:
+            st.success("Aktiviteter hämtade:")
+            for aktivitet in data:
+                st.write(f"🗓️ {aktivitet.get('title', 'Ingen titel')}")
+        else:
+            st.error("Kunde inte hämta data från Kalendarium.")
+
 
 elif page == "points":
     st.title("Poäng")
