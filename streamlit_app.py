@@ -1,41 +1,66 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
+from kalendarium_api import fetch_kalendarium   # pyright: ignore[reportMissingImports]
 
-st.set_page_config(page_title="ActivityFinder", layout="centered")
+
+st.set_page_config (page_title = "ActivityFinder", layout = "centered")
 
 # Initiera session state
 if "page" not in st.session_state:
     st.session_state.page = "home"
+    
 
-def navigate_to(page):
+def navigate_to (page):
     st.session_state.page = page
     st.rerun()
+    
+# Mappa interna sidnamn till menyetiketter
+page_to_option = {
+    "home": "Startsida",
+    "points": "Poäng",
+    "map": "Karta",
+    "info": "Om"
+}
+
+option_to_page = {v: k for k, v in page_to_option.items()}
+
+# Räkna ut vilket index som ska vara aktivt i menyn
+default_index = list (
+    page_to_option.values()).index (page_to_option.get(st.session_state.page, "Startsida"))
+
+
+# Visa lite extra utrymme för bottenmenyn
+st.markdown("<div style='height: 70px;'></div>", unsafe_allow_html=True)    
 
 # Använd option_menu för bottenmeny (horisontell)
 selected = option_menu(
-    menu_title=None,  # Ingen titel på menyn
-    options=["Startsida", "Poäng", " Karta", "Om"],
-    icons=["house", "trophy", "map", "info-circle"],
-    menu_icon="cast",
-    default_index=0,
-    orientation="horizontal",
-    styles={
+    menu_title = None,  # Ingen titel på menyn
+    options = ["Startsida", "Poäng", "Karta", "Om"],
+    icons = ["house", "trophy", "map", "info-circle"],
+    menu_icon = "cast",   
+    default_index = list(page_to_option.values()).index(page_to_option[st.session_state.page]),
+    orientation = "horizontal",
+    styles = {
         "container": {"padding": "0!important", "background-color": "#f0f0f0"},
         "nav-link": {"font-size": "16px", "text-align": "center", "margin": "0px", "--hover-color": "#eee"},
         "nav-link-selected": {"background-color": "#0d6efd", "color": "white"},
-    },
+        
+    }
 )
 
-# Spara valet i session_state
-if selected == "Startsida":
-    st.session_state.page = "home"
-elif selected == "Poäng":
-    st.session_state.page = "points"
-elif selected == "Karta":
-    st.session_state.page = "map"
-elif selected == "Om":
-    st.session_state.page = "info"
+# Uppdatera session_state beroende på användarens val
+if selected and option_to_page[selected] != st.session_state.page:
+    st.session_state.page = option_to_page[selected]
+    st.rerun()
+    
 
+page_to_option = {
+    "home": "Startsida",
+    "points": "Poäng",
+    "map": "Karta",
+    "info": "Om"
+}
+    
 # Visa vald sida
 page = st.session_state.page
 
@@ -49,6 +74,29 @@ if page == "home":
 
     Appen är anpassad för mobil – lägg till den på din hemskärm för snabb åtkomst!
     """)
+    
+     # Välj datumintervall
+    st.subheader ("Hitta pågående evenemang:")
+    start_date = st.date_input("Startdatum", value=None, key="start")
+    end_date = st.date_input("Slutdatum", value=None, key="end")
+    data = None
+
+    if start_date and end_date:
+        data = fetch_kalendarium(start_date, end_date)
+        
+        st.write("Sökresultat:")
+        st.write(data)  # eller print(data) om du kör i terminalen
+
+    if isinstance(data, list):
+        for aktivitet in data:
+            if isinstance(aktivitet, dict):
+                st.write(f"🗓️ {aktivitet.get('title', 'Ingen titel')}")
+            else:
+                st.warning(f"❗ Aktivitet är inte ett dict: {aktivitet}")
+    else:
+        st.error("❌ Hittade inga evenemang under dessa datum.")
+
+
 
 elif page == "points":
     st.title("Poäng")
@@ -67,3 +115,5 @@ elif page == "info":
     🛠️ Utvecklad med: [Streamlit](https://streamlit.io)  
     📱 Designad för: mobilanvändning  
     """)
+
+# OBS! OptionMenu placerar sig automatiskt längst ner om du placerar den sist i din fil
