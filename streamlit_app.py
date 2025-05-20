@@ -1,6 +1,5 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from kalendarium_api import fetch_kalendarium   # pyright: ignore[reportMissingImports]
 
 
 st.set_page_config (page_title = "ActivityFinder", layout = "centered")
@@ -80,22 +79,6 @@ if page == "home":
     start_date = st.date_input("Startdatum", value=None, key="start")
     end_date = st.date_input("Slutdatum", value=None, key="end")
     data = None
-
-    if start_date and end_date:
-        data = fetch_kalendarium(start_date, end_date)
-        
-        st.write("Sökresultat:")
-        st.write(data)  # eller print(data) om du kör i terminalen
-
-    if isinstance(data, list):
-        for aktivitet in data:
-            if isinstance(aktivitet, dict):
-                st.write(f"🗓️ {aktivitet.get('title', 'Ingen titel')}")
-            else:
-                st.warning(f"❗ Aktivitet är inte ett dict: {aktivitet}")
-    else:
-        st.error("❌ Hittade inga evenemang under dessa datum.")
-
 
 
 elif page == "points":
