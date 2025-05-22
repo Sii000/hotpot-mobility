@@ -2,24 +2,26 @@ import requests
 import pandas as pd
 from requests.auth import HTTPBasicAuth
 
-# 1. API-anrop
+# API-url
 url = "https://esb.goteborg.se/TEIK/Kalendarium/v1_0/activities?start=2025-06-01&end=2025-06-30"
 username = "kalendarieapi"
-password = r"V5S\eWs@"  # raw string pga \
+password = r"V5S\eWs@"  # raw string för att undvika escape-problem
 
+# API-anrop med Basic Auth
 response = requests.get(url, auth=HTTPBasicAuth(username, password))
 
 if response.status_code == 200:
     print("✅ Data hämtad")
     data = response.json()
 
-    # 2. Omvandla till DataFrame
-    df = pd.json_normalize(data)  # plattar ut nested JSON
+    # Omvandla JSON till DataFrame
+    df = pd.json_normalize(data)
 
-    # 3. Spara till CSV
+    # Spara som CSV
     df.to_csv("kalendarium.csv", index=False, encoding='utf-8-sig')
-    print("📁 CSV sparad som 'kalendarium.csv'")
+    print("📁 Fil sparad som 'kalendarium.csv' – öppna i Excel!")
 
 else:
-    print("❌ Fel vid anrop:", response.status_code)
+    print("❌ API-anrop misslyckades:", response.status_code)
     print(response.text)
+
