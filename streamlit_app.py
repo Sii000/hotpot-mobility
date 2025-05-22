@@ -8,6 +8,7 @@ st.set_page_config (page_title = "ActivityFinder", layout = "centered")
 # Initiera session state
 if "page" not in st.session_state:
     st.session_state.page = "home"
+    
 
 def navigate_to (page):
     st.session_state.page = page
@@ -40,37 +41,9 @@ selected = option_menu(
     default_index = list(page_to_option.values()).index(page_to_option[st.session_state.page]),
     orientation = "horizontal",
     styles = {
-        "container": {
-            "padding": "0!important", 
-            "background-color": "#f0f0f0",
-            "position": "fixed",
-            "bottom": "0",
-            "width": "100%",
-            "z-index": "9999",
-            "border-top": "1px solid #ccc"
-        },
-        "icon": {
-            "display": "block",
-            "margin": "0 auto",
-            "font-size": "20px"
-            
-        },
-        "nav-link": {
-            "display": "flex",
-            "flex-direction": "column",
-            "align-items": "center",
-            "font-size": "14px", 
-            "margin": "0px", 
-            "padding": "6px 0",
-            "--hover-color": "#eee"
-            
-        },
-        "nav-link-selected": {
-            "background-color": "#0d6efd", 
-            "color": "white",
-            "font-weight": "bold"
-        },
-        
+        "container": {"padding": "0!important", "background-color": "#f0f0f0"},
+        "nav-link": {"font-size": "16px", "text-align": "center", "margin": "0px", "--hover-color": "#eee"},
+        "nav-link-selected": {"background-color": "#0d6efd", "color": "white"},        
     }
 )
 
@@ -102,27 +75,10 @@ if page == "home":
     """)
     
      # Välj datumintervall
-    st.title ("Hitta pågående evenemang:")
+    st.subheader ("Hitta pågående evenemang:")
     start_date = st.date_input("Startdatum", value=None, key="start")
     end_date = st.date_input("Slutdatum", value=None, key="end")
     data = None
-
-    if start_date and end_date:
-        data = fetch_kalendarium(start_date, end_date)
-        
-        st.write("🔍 API-svar:")
-        st.write(data)  # eller print(data) om du kör i terminalen
-
-    if isinstance(data, list):
-        for aktivitet in data:
-            if isinstance(aktivitet, dict):
-                st.write(f"🗓️ {aktivitet.get('title', 'Ingen titel')}")
-            else:
-                st.warning(f"❗ Aktivitet är inte ett dict: {aktivitet}")
-    else:
-        st.error("❌ API-svaret är inte en lista av aktiviteter.")
-
-
 
 elif page == "points":
     st.title("Poäng")
