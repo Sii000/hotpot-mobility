@@ -26,8 +26,7 @@ if response.status_code == 200:
         "location.name",
         "location.address",
         "location.city",
-        "audience",
-        "tags"
+        "audience"
     ]
     
     
