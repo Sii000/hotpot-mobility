@@ -23,8 +23,6 @@ if response.status_code == 200:
     desired_columns = [
         "title",
         "description",
-        "startTime",
-        "endTime",
         "location.name",
         "location.address",
         "location.city",
