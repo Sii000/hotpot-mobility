@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 from requests.auth import HTTPBasicAuth
+from bs4 import BeautifulSoup
 
 # API-info
 url = "https://esb.goteborg.se/TEIK/Kalendarium/v1_0/activities?start=2025-06-01&end=2025-06-30"
@@ -30,6 +31,18 @@ if response.status_code == 200:
         "audience",
         "tags"
     ]
+    
+    
+    # Rensa HTML-taggar i beskrivningen
+def clean_html(text):
+    try:
+        return BeautifulSoup(text, "html.parser").get_text(separator=" ", strip=True)
+    except:
+        return text
+
+if "description" in df.columns:
+    df["description"] = df["description"].apply(clean_html)
+
 
     # Filtrera kolumner som faktiskt finns
     available_columns = [col for col in desired_columns if col in df.columns]
