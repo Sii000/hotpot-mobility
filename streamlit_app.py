@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
+from kalendarium_api import fetch_kalendarium   # pyright: ignore[reportMissingImports]
 
 
 st.set_page_config (page_title = "ActivityFinder", layout = "centered")
@@ -42,8 +43,7 @@ selected = option_menu(
     styles = {
         "container": {"padding": "0!important", "background-color": "#f0f0f0"},
         "nav-link": {"font-size": "16px", "text-align": "center", "margin": "0px", "--hover-color": "#eee"},
-        "nav-link-selected": {"background-color": "#0d6efd", "color": "white"},
-        
+        "nav-link-selected": {"background-color": "#0d6efd", "color": "white"},        
     }
 )
 
@@ -79,7 +79,6 @@ if page == "home":
     start_date = st.date_input("Startdatum", value=None, key="start")
     end_date = st.date_input("Slutdatum", value=None, key="end")
     data = None
-
 
 elif page == "points":
     st.title("Poäng")
