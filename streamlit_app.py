@@ -28,19 +28,17 @@ if menu == "🏠 Startsida":
 
 elif menu == "🏆 Poäng":
     st.title("🏆 Poäng")
+    st.markdown ("""
+    Här kommer du kunna se din poäng och din rank inom kort!")
 
 elif menu == "🗺️ Karta":
-    st.title("🗺️ Karta över aktiviteter")
-    df = pd.read_csv("kalendarium_filtered.csv")
-    df = df.dropna(subset=["latitude", "longitude"])
-    df["latitude"] = pd.to_numeric(df["latitude"], errors="coerce")
-    df["longitude"] = pd.to_numeric(df["longitude"], errors="coerce")
-    st.map(df.rename(columns={"latitude": "lat", "longitude": "lon"}))
+    st.title("🗺️ Karta")
+  
 
 elif menu == "ℹ️ Om":
     st.title("ℹ️ Om appen")
     st.markdown("""
-    Denna app är utvecklad för att göra det enkelt att upptäcka och planera evenemang i Göteborg.
+    Denna app är utvecklad för att göra det enkelt för familjer att upptäcka och planera aktiviteter i Göteborg, samt visa tillgängligheten.
 
     🛠️ Utvecklad med: [Streamlit](https://streamlit.io)  
     📱 Designad för: mobilanvändning  
